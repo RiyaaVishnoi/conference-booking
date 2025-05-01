@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+</head>
+<body>
+    <h1>My Bookings</h1>
+
+    {% if bookings %}
+        <ul>
+        {% for booking in bookings %}
+            <li>
+                {{ booking.room.name }} — {{ booking.date }} ({{ booking.start_time }} - {{ booking.end_time }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no bookings.</p>
+    {% endif %}
+
+</body>
+</html>
