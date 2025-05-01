@@ -11,6 +11,8 @@
         {% for booking in bookings %}
             <li>
                 {{ booking.room.name }} — {{ booking.date }} ({{ booking.start_time }} - {{ booking.end_time }})
+            <a href="{% url 'edit_booking' booking.id %}">Edit</a> |
+            <a href="{% url 'cancel_booking' booking.id %}">Cancel</a>
             </li>
         {% endfor %}
         </ul>

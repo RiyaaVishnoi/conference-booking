@@ -1,0 +1,8 @@
+<h1>Cancel Booking</h1>
+<p>Are you sure you want to cancel your booking for {{ booking.room.name }} on {{ booking.date }}?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Yes, Cancel Booking</button>
+    <a href="{% url 'my_bookings' %}">No, Go Back</a>
+</form>

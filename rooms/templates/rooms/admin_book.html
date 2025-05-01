@@ -1,0 +1,13 @@
+<h1>Admin Booking</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label>User:</label>
+    <select name="user" required>
+        {% for u in users %}
+            <option value="{{ u.id }}">{{ u.username }}</option>
+        {% endfor %}
+    </select>
+
+    {{ form.as_p }}
+    <button type="submit">Book Room</button>
+</form>
