@@ -1,16 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Room List</title>
-</head>
-<body>
-    <h1>Available Rooms</h1>
-    <ul>
-        {% for room in rooms %}
-            <li>{{ room.name }} — Capacity: {{ room.capacity }} — Location: {{ room.location }}</li>
-        {% empty %}
-            <li>No rooms available.</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Available Rooms{% endblock %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <p class="text-end">Welcome, <strong>{{ user.username }}</strong>!</p>
+        <!-- ✅ Add Book Room button here -->
+        <div class="text-end mb-3">
+            <a href="{% url 'book_room' %}" class="btn btn-success">Book a Room</a>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <a href="{% url 'login' %}">Log in</a> to book a room.
+        </div>
+    {% endif %}
+
+    <h1 class="mb-4">Available Rooms</h1>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.name }}</td>
+                <td>{{ room.capacity }}</td>
+                <td>{{ room.location }}</td>
+                <td>{{ room.available }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No rooms available.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

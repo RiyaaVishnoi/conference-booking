@@ -21,9 +21,11 @@ from rooms import views as room_views
 from django.contrib import admin
 from django.urls import path, include
 urlpatterns = [
+    path('', include('rooms.urls')),
+
     path('admin/', admin.site.urls),
     path('rooms/', include('rooms.urls')),
-path('login/', auth_views.LoginView.as_view(template_name='rooms/login.html'), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='rooms/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='room_list'), name='logout'),
     path('register/', room_views.register, name='register'),
 ]
