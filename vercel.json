@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "conference_booking/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "conference_booking/wsgi.py"
+    }
+  ]
+}
