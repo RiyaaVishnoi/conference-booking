@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-&(=epmn1i=mu=(2uo$2s_q!%vnt$q7k&863ggjo1$j$mdtb*r_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+import os
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    os.environ.get('VERCEL_URL', 'example.com')  # ✅ Add this line
+]
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -124,3 +130,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+if os.environ.get('VERCEL'):
+    ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
