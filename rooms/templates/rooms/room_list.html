@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+
 {% block title %}Available Rooms{% endblock %}
+
 {% block content %}
 
     {% if user.is_authenticated %}
         <p class="text-end">Welcome, <strong>{{ user.username }}</strong>!</p>
-        <!-- ✅ Add Book Room button here -->
         <div class="text-end mb-3">
             <a href="{% url 'book_room' %}" class="btn btn-success">Book a Room</a>
         </div>
@@ -15,13 +16,24 @@
     {% endif %}
 
     <h1 class="mb-4">Available Rooms</h1>
+
+    <form method="get" class="mb-3">
+        <div class="d-flex gap-2 align-items-center">
+            <label class="form-label mb-0">Filter:</label>
+            <select name="available" class="form-select form-select-sm" onchange="this.form.submit()" style="width:auto;">
+                <option value="" {% if not show_available %}selected{% endif %}>All Rooms</option>
+                <option value="1" {% if show_available %}selected{% endif %}>Available Only</option>
+            </select>
+        </div>
+    </form>
+
     <table class="table table-bordered table-hover">
         <thead class="table-light">
             <tr>
                 <th>Name</th>
                 <th>Capacity</th>
                 <th>Location</th>
-                <th>Available</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -30,10 +42,18 @@
                 <td>{{ room.name }}</td>
                 <td>{{ room.capacity }}</td>
                 <td>{{ room.location }}</td>
-                <td>{{ room.available }}</td>
+                <td>
+                    {% if room.is_available %}
+                        <span class="badge bg-success">Available</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Unavailable</span>
+                    {% endif %}
+                </td>
             </tr>
             {% empty %}
-            <tr><td colspan="4">No rooms available.</td></tr>
+            <tr>
+                <td colspan="4" class="text-center">No rooms found.</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>

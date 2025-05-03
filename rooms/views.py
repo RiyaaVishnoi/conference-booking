@@ -11,8 +11,18 @@ from .forms import BookingForm
 
 # get all rooms from db and pass them to room list
 def room_list(request):
-    rooms = Room.objects.all()
-    return render(request, 'rooms/room_list.html', {'rooms': rooms})
+    show_available = request.GET.get('available') == '1'
+
+    if show_available:
+        rooms = Room.objects.filter(is_available=True)
+    else:
+        rooms = Room.objects.all()
+
+    return render(request, 'rooms/room_list.html', {
+        'rooms': rooms,
+        'show_available': show_available
+    })
+
 
 @login_required
 def book_room(request):
@@ -46,8 +56,18 @@ def register(request):
 
 @login_required
 def my_bookings(request):
+    query = request.GET.get('q', '')
     bookings = Booking.objects.filter(user=request.user)
-    return render(request, 'rooms/my_bookings.html', {'bookings': bookings})
+
+    if query:
+        bookings = bookings.filter(
+            room__name__icontains=query
+        )
+
+    return render(request, 'rooms/my_bookings.html', {
+        'bookings': bookings,
+        'query': query
+    })
 
 # ensure user can only change their bookings
 @login_required
