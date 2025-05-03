@@ -14,7 +14,7 @@ def room_list(request):
     show_available = request.GET.get('available') == '1'
 
     if show_available:
-        rooms = Room.objects.filter(is_available=True)
+        rooms = Room.objects.filter(available=True)
     else:
         rooms = Room.objects.all()
 
