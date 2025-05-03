@@ -43,7 +43,7 @@
                 <td>{{ room.capacity }}</td>
                 <td>{{ room.location }}</td>
                 <td>
-                    {% if room.is_available %}
+                    {% if room.available %}
                         <span class="badge bg-success">Available</span>
                     {% else %}
                         <span class="badge bg-secondary">Unavailable</span>
