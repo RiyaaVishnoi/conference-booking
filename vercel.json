@@ -11,12 +11,12 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "staticfiles/$1"
+      "dest": "/staticfiles/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "conference_booking/wsgi.py"
+      "dest": "/conference_booking/wsgi.py"
     }
   ],
-  "buildCommand": "python manage.py collectstatic --noinput"
+  "buildCommand": "python3 manage.py collectstatic --noinput"
 }
