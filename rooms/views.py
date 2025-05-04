@@ -30,6 +30,9 @@ def book_room(request):
         form = BookingForm(request.POST)
         if form.is_valid():
             booking = form.save(commit=False)
+            if not booking.room.available:
+                messages.error(request, "That room is currently unavailable.")
+                return redirect('book_room')
             booking.user = request.user
             booking.save()
             messages.success(
